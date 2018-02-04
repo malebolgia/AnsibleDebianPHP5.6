@@ -1,0 +1,5 @@
+[aws]
+11.11.11.111
+
+[aws:vars]
+ansible_password=thepasswordmonkey

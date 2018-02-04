@@ -1,0 +1,79 @@
+---
+
+#AWS
+aws_cli_user: 'www-data'
+aws_cli_group: 'www-data'
+aws_output_format: 'json'
+aws_region: 'ap-northeast-1'
+aws_access_key_id: 'S3ACCESSKEY'
+aws_secret_access_key: 'Jublesecretaccesskey'
+aws_bucket: ssdapp
+aws_folder: images
+
+#Server site
+connections: 1024 #Nginx Connection
+server_name: ec2-11-11-11-11.ap-northeast-1.compute.amazonaws.com
+project_app_site: your.projectsite.com
+
+# MySQL settings
+ubuntu_mysql_pkgs:
+  - mysql-server
+  - mysql-client
+  - python-mysqldb
+  - libmysqlclient-dev
+
+mysqlservice: mysqld
+mysql_port: 3306
+
+# Database settings
+mysql_version: 10.0
+mysql_bind_address: '0.0.0.0'
+mysql_databases:
+  - project_one
+  - project_two
+mysql_root_password: yourrootpass
+mysql_users:
+  - name: userone
+    password: samplepass
+    priv: "project_one.*:ALL,GRANT"
+  - name: usertwo
+    password: samplepass
+    priv: "project_two.*:ALL"
+mysql_init_scripts:
+  - database: project_two
+    script: files/create_users_table.sql
+
+
+#PHP
+ubuntu_php_pkgs:
+  - php5.6-fpm
+  - php5.6-cgi
+  - php5.6-cli
+  - php5.6-curl
+  - php5.6-json
+  - php5.6-odbc
+  - php5.6-tidy
+  - php5.6-common
+  - php5.6-xmlrpc
+  - php5.6-gd
+  - php-pear
+  - php5.6-dev
+  - php5.6-imap
+  - php5.6-mcrypt
+  - php5.6-mysqlnd
+  - php5.6-mbstring
+
+# Terminal
+sudo_user: root
+the_user: usersample
+the_user_password: admin123
+
+#sites path and configs
+site_available: /etc/nginx/sites-available
+site_enabled: /etc/nginx/sites-enabled
+main_path: /var/www/
+public_html_main_folder: public_html
+main_folder: your.projectsite.com
+
+#PHP Variable
+composer_path: /usr/local/bin/composer

@@ -1,0 +1,59 @@
+---
+
+- name: Create user for normal access
+  user: name={{the_user}} password={{the_user_password}}
+
+- name: Add simple user to www-data group
+  user:
+    name: {{the_user}}
+    comment: "user as www-data"
+    groups: www-data,ssdaaron
+
+- name: Create directory for sites [NGINX]
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+  with_items:
+    - "{{ main_path }}{{ main_folder }}/{{ public_html_main_folder }}"
+
+- name: copy archive and extract
+  unarchive:
+    src: files/public.tar.gz
+    dest: "{{ item }}"
+  with_items:
+    - "{{ main_path }}{{ main_folder }}/{{ public_html_main_folder }}"
+
+- name: Chmod directory for sites
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    recurse: yes
+    mode: 0664
+  with_items:
+    - "{{ main_path }}{{ main_folder }}/{{ public_html_main_folder }}"
+
+- name: Ansible - Mode 755 for directories and 644 for files recursively
+  file:
+    path: "{{ item }}"
+    owner: www-data
+    group: www-data
+    mode: u=rwX,g=rX,o=rX
+    recurse: yes
+  with_items:
+    - "{{ main_path }}{{ main_folder }}/{{ public_html_main_folder }}"
+
+- name: copy ssd config
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: www-data
+    group: www-data
+  with_items:
+    - { src: "templates/inc.aj.php.j2", dest: "{{ main_path }}{{ main_folder }}/{{ public_html_main_folder }}/inc.aj.php" }
+  tags: ssd-app
+

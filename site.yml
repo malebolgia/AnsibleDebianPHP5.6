@@ -1,0 +1,14 @@
+---
+- name: Install S3, PHP, NGINX, MySql, Your Project Files
+  hosts: aws
+  remote_user: root
+  sudo: yes
+
+  roles:
+    - common
+    - s3
+    - nginx
+    - mysql
+    - php
+    - phpmyadmin
+    - yourproject
