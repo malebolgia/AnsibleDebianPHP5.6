@@ -4,7 +4,7 @@ run with
 
 ansible-playbook -i hosts site.yml --ask-pass
 
-###Install with
+### Install with
 
 1. s3
 2. nginx
